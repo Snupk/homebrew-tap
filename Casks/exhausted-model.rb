@@ -8,13 +8,13 @@ cask "exhausted-model" do
   homepage "https://github.com/Snupk/exhausted-model"
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "ExhaustedModel.app"
 
   # The app is not notarized yet; drop the download quarantine so it opens normally.
-  postflight do
-    system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{appdir}/ExhaustedModel.app"]
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/ExhaustedModel.app"]
   end
 
   zap trash: "~/.exhausted-model"
